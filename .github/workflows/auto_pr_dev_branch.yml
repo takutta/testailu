@@ -15,4 +15,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          gh pr create --base main --title "my pull request" --body "description"1
+          gh pr create --base main --title "Dev to main"
