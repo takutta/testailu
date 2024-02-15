@@ -14,4 +14,3 @@ jobs:
           commit-message: Message
           title: New changes from dev
           body: Please review the new changes.
-          branch: main
