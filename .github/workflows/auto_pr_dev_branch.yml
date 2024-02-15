@@ -2,15 +2,15 @@ name: Create Pull Request
 on:
   push:
     branches:
-      - main
+      - dev
+permissions:
+  pull-requests: write
+
 jobs:
-  create-pull-request:
-    runs-on: ubuntu-22.04
+  pull-request:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: dev
+      - name: pull-request
+        run: |
+          gh pr create --base main --title "my pull request" --body "description"1
