@@ -14,5 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: |
+      - name: Check if PR exists
+        id: check_pr
+        run: |
+          pr_exists=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls?state=open&head=dev" \
+            | jq '. | length')
+          echo "::set-output name=pr_exists::$pr_exists"
+      - name: Create PR
+        if: steps.check_pr.outputs.pr_exists == 0
+        run: |
           gh pr create --base main --title "Dev to main" --body "This is an auto-generated PR from the dev branch to the main branch."
