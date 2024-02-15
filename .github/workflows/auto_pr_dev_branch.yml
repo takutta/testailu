@@ -6,6 +6,9 @@ on:
 permissions:
   pull-requests: write
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   pull-request:
     runs-on: ubuntu-latest
