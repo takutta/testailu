@@ -1,21 +1,17 @@
-name: Auto PR on Commit to Dev
-
+name: Create Pull Request
 on:
   push:
     branches:
       - dev
-
 jobs:
-  create-pr:
-    runs-on: ubuntu-latest
-
+  create-pull-request:
+    runs-on: ubuntu-22.04
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v6
-      with:
-        commit-message: "Automatically created PR on commit to dev"
-        title: "Automatically created PR"
-        body: "This PR was automatically created when committing to the dev branch."
+      - uses: actions/checkout@v4
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: Message
+          title: New changes from dev
+          body: Please review the new changes.
+          branch: dev
