@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Create PR if none exists
+      - name: Check if PR exists
         run: |
           prs=$(gh pr list \
               --repo "$GITHUB_REPOSITORY" \
@@ -22,6 +22,12 @@ jobs:
               --base 'master' \
               --json title \
               --jq 'length')
-          if ((prs = 0)); then
-            gh pr create --base main --title "Dev to main" --body "This is an auto-generated PR from the dev branch to the main branch."
+          if ((prs > 0)); then
+            echo "PRs found. Stopping the workflow."
+            echo "skip_create_pr=true" >> "$GITHUB_ENV"
           fi
+        shell: /usr/bin/bash -e {0}
+      - name: Create PR
+        if: env.skip_create_pr != 'true'
+        run: |
+          gh pr create --base main --title "Dev to main" --body "This is an auto-generated PR from the dev branch to the main branch."
