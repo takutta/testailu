@@ -13,6 +13,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Create PR to merge dev into main
         run: |
-          gh pr create -B develop --title "Merge dev into main" --body 'Created by Github action' || gh pr edit -B develop --title "dev into main" --body 'Created by Github action'
+          gh pr create -B dev --title "Merge dev into main" --body 'Created by Github action' || gh pr edit -B dev --title "dev into main" --body 'Created by Github action'
         env:
           GITHUB_TOKEN: ${{ github.token }}
