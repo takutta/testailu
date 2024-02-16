@@ -6,28 +6,13 @@ on:
 permissions:
   pull-requests: write
 
-env:
-  GH_TOKEN: ${{ github.token }}
-
 jobs:
   pull-request:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check if PR exists
+      - name: Create PR to merge dev into main
         run: |
-          prs=$(gh pr list \
-              --repo "$GITHUB_REPOSITORY" \
-              --head 'dev' \
-              --base 'master' \
-              --json title \
-              --jq 'length')
-          if ((prs > 0)); then
-            echo "PRs found. Stopping the workflow."
-            echo "::set-env name=skip_create_pr::true"
-          fi
-        shell: /usr/bin/bash -e {0}
-      - name: Create PR
-        if: env.skip_create_pr != 'true'
-        run: |
-          gh pr create --base main --title "Dev to main" --body "This is an auto-generated PR from the dev branch to the main branch."
+          gh pr create -B main --title "Merge dev into main" --body 'Created by Github action' || gh pr edit -B main --title "dev into main" --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
