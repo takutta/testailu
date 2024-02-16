@@ -1,8 +1,6 @@
 name: City Bike App Deployment Pipeline
 on:
-  pull_request_target:
-    branches:
-      - dev
+  pull_request:
 
 permissions:
   pull-requests: write
