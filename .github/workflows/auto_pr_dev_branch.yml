@@ -24,7 +24,7 @@ jobs:
               --jq 'length')
           if ((prs > 0)); then
             echo "PRs found. Stopping the workflow."
-            echo "skip_create_pr=true" >> "$GITHUB_ENV"
+            echo "::set-env name=skip_create_pr::true"
           fi
         shell: /usr/bin/bash -e {0}
       - name: Create PR
